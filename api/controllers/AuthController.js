@@ -7,12 +7,12 @@ const jwt = require("jsonwebtoken");
 const register = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
   if (!username || !email || !password) {
-    res.send("please add all fields");
+    res.status(400).json("please add all fields");
   }
   const userExists = await User.findOne({ email });
 
   if (userExists) {
-    res.send("user already exists");
+    res.json("user already exists");
   }
 
   const salt = await bcrypt.genSalt();
@@ -45,8 +45,9 @@ const login = asyncHandler(async (req, res) => {
   if (user && (await bcrypt.compare(password, user.password))) {
     res.status(200).json({
       id: user.id,
-      name: user.id,
+      username: user.username,
       email: user.email,
+      profilePicture: user.profilePicture,
       token: generateToken(user._id),
     });
   } else {

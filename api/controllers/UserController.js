@@ -5,16 +5,18 @@ const Post = require("../models/PostModel");
 
 //update user
 const updateUser = asyncHandler(async (req, res) => {
-  const { id, password } = req.body;
-  if (id === req.params.id) {
-    if (password) {
+  if (req.body.id === req.params.id) {
+    if (req.body.password) {
       const salt = await bcrypt.genSalt();
-      password = await bcrypt.hash(password, salt);
-      return res.status(500).json(err);
+      req.body.password = await bcrypt.hash(req.body.password, salt);
     }
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    });
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
     res.status(200).json(updatedUser);
   } else {
     return res.status(403).json("Not Authorized");
@@ -48,6 +50,7 @@ const getUser = asyncHandler(async (req, res) => {
     id: user._id,
     username: user.username,
     email: user.email,
+    profilePicture: user.profilePicture,
   });
 });
 

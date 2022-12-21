@@ -8,6 +8,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 require("dotenv").config();
 const multer = require("multer");
+const path = require("path");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(morgan("common"));
+app.use("/images", express.static(path.join(__dirname, "/images")));
 
 //image upload
 const storage = multer.diskStorage({
@@ -24,7 +26,7 @@ const storage = multer.diskStorage({
     cb(null, "images");
   },
   filename: (req, file, cb) => {
-    cb(null, "hello.jpeg");
+    cb(null, req.body.name);
   },
 });
 

@@ -44,7 +44,7 @@ const deletePost = asyncHandler(async (req, res) => {
   }
 
   if (post.username === req.body.username) {
-    await Post.remove();
+    await post.remove();
     res.status(200).json("post has been deleted");
   } else {
     res.status(400).json("Not Authorized");

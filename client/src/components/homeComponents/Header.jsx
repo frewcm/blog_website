@@ -7,7 +7,7 @@ function Header() {
       </div>
       <img
         className="w-full h-[450px] mt-20 object-cover"
-        src="https://cdn.ucberkeleybootcamp.com/wp-content/uploads/sites/106/2020/03/Web-Developer-Bootcamp-San-Francisco.jpeg"
+        src="/Web-Developer-Bootcamp-San-Francisco.jpeg"
       />
     </div>
   );
